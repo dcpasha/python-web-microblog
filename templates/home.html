@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblog</title>
+
+    <!-- Link our css styles. rel= (relationship) attribute expects specifies a persistent style  -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- navbar is the class of the blog name -->
+    <header class="navbar">
+        <!-- navbar__brand is the element name -->
+        <div class="navbar__brand">
+            <!-- alt text is what displayed if your image doesn't load -->
+            <img class="navbar__logo" src="static/microblog-logo.svg" alt = "The Microblog logo"/> Microblog
+        </div>
+        <!-- Unordered list for navigation. ul tells the screenreader that those are sequential  -->
+        <ul class="navbar__navigation">
+            <li class="navbar__navigation-item"> <a href="#" class="navbar__link">Recent</a></li>
+            <li class="navbar__navigation-item"> <a href="#" class="navbar__link">Calendar</a></li>
+        </ul>
+    </header>
+
+    <main class="main">
+        <section> 
+            <h1>Add new entry</h1>
+            <!-- Use a FORM element to send data: two methods to send the data GET or POST  -->
+            <!-- It is better to use POST when you need to submit a lot of data. Your URL will be long if you use GET -->
+            <!-- action= specifies where the data needs to be sent to (a specific url). 
+            If you keep it as "/", the data will be submitted on the same page where you are, so you stay on
+            the same page after submittung the form. -->
+            <!-- Flask app will accept this data in backend -->
+            <form class="form" action="/" method="POST">
+                <!-- added a paragraph tag to have a better sctructure -->
+                <p class="form__input">
+                    <!-- To associate a <label> element with an <input> element, add the id attribute to the <input> element, then make the for attrbute to match the id in the input element-->
+                    <label for="entry" class="form__label">Entry content:</label>
+                    <textarea name="content" id="entry" class="form__textarea"></textarea>
+                </p>
+                <button type="submit" class="form__submit">Add Entry</button>
+            </form>
+        </section>
+
+        <section>
+            <h1>Recent posts</h1> 
+            <!--Create a for loop  -->
+            {% for entry in entries %}
+            <!-- A new article is create for each post a user creates -->
+                <article class="entry">
+                    <div>
+                        <!-- Using jinja filter, we will truncate after the first 30 characters truncate(30, true) 
+                        true will show the ellipsis if the text is longer }}-->
+                        <h2 class="entry__title"> {{entry[0] | truncate(30, true)}} </h2>
+                        <time class="entry__date" datetime="{{ entry[1] }}">{{ entry[2] }}</time>
+                    </div>  
+                    <p class="entry__content">
+                        {{ entry[0] }}
+                        <!-- Today I couldn't do much programming, but that is okay!  -->
+                    </p>
+                </article>
+                <!-- Specify where the for loop ends -->
+            {% endfor %}
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <!-- Footer will take the whole width of the page, but the content will have the same width as the heading of the page -->
+        <div class="footer__content">
+            <section class="left"> 
+                <a class="footer__item" href="">Made by Pavel Potapov</a>
+                <a class="footer__item" href="">Check out my other projects</a>
+            </section>
+
+            <section class="right">
+                <div class="footer__column">
+                    <a class="footer__item" href="">Recent</a>
+                    <a class="footer__item" href="">Calendar</a>
+                </div>
+
+                <div class="footer__column">
+                    <a class="footer__item" href="">About</a>
+                    <a class="footer__item" href="">How it was made</a>
+                </div>
+            </section>
+
+
+        </div>
+
+    </footer>
+</body>
+</html>

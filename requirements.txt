@@ -1,0 +1,6 @@
+flask
+python-dotenv
+pymongo[srv]
+certifi
+datetime
+gunicorn
